@@ -37,12 +37,13 @@ public class Population {
 			while (scan.hasNext()) {
 				if (scan.hasNextInt()) {
 					int value = scan.nextInt();
+				//	System.out.println(value + " " + fault);
 					tests[fault] = value;
 					fault++;
 					if (fault == faultNumber) {
 						fault = 0;
 						this.p[testCase] = UnitTest.getUnitTests(tests);
-						System.out.println(p[testCase] + " " + testCase);
+						//System.out.println(p[testCase] + " " + testCase);
 						testCase++;
 					}
 				} else {
@@ -55,7 +56,15 @@ public class Population {
 			e.printStackTrace();
 		}
 		/* Sort in order of fitness */
+//		for (int j = 0; j<p.length;j++){
+//		System.out.println(p[j]);
+//		}
 		Arrays.sort(p);
+//		System.out.println("=====");
+//		for (int k = 0; k<p.length;k++){
+//			System.out.println(p[k]);
+//			}
+		
 	}
 
 	/* create copy of current population and return it */

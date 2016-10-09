@@ -44,14 +44,17 @@ public class UnitTest implements Comparable<UnitTest> {
 		int faults = 0;
 		// char[] geneChars = gene.toCharArray();
 		for (int i = 0; i < gene.length; i++) {
+		//	System.out.println(gene[i]);
 			if (gene[i] == 1) {
 				faults++;
 			}
 		}
-		float APFD = (faults/gene.length);
+	//	System.out.println(gene.length);
+		float APFD = (((float) faults)/((float)gene.length)); //average percentage of fauls detected
+	//	System.out.println(APFD);
 		// fitness += Math.abs(((int) geneChars[i]) - ((int) target[i]));
 		// }
-		return fitness;
+		return APFD;
 	}
 
 	// /* Crossover Performed here */

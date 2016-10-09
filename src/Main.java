@@ -15,7 +15,10 @@ public class Main {
 			long start = System.currentTimeMillis();
 			Population p = new Population(); 
 			p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber);
-		//	UnitTest bestGene = p.getPopulation()[0];
+			UnitTest bestGene = p.getPopulation()[0];
+			UnitTest worstGene = p.getPopulation()[215];
+			System.out.println(bestGene.getFitness());
+			System.out.println(worstGene.getFitness());
 		//	while (bestGene.getFitness() != 0 && numberOfGenerations < 20000) {
 			//	p.evolve(); 
 				//p.random();
