@@ -27,14 +27,14 @@ public class Population {
 		int fault = 0, testCase = 0;
 		File file = new File("nanoxmltestfaultmatrix.txt");
 		int[] tests = new int[faultNumber];
-		
-		/*scan each line until integer is found, add this to array and create 
-		 * new Unit Tests from array of faults 
+
+		/*
+		 * scan each line until integer is found, add this to array and create
+		 * new Unit Tests from array of faults
 		 */
 		try {
 			Scanner scan = new Scanner(file);
 			while (scan.hasNext()) {
-
 				if (scan.hasNextInt()) {
 					int value = scan.nextInt();
 					tests[fault] = value;
@@ -48,21 +48,14 @@ public class Population {
 				} else {
 					read = scan.next();
 				}
-
 			}
-
 			scan.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// for (int i = 0; i < populationSize; i++) {
-		// this.p[i] = UnitTest.getUnitTests(i, faultNumber);
-		// // break;
-		// }
 		/* Sort in order of fitness */
-		// Arrays.sort(p);
+		Arrays.sort(p);
 	}
 
 	/* create copy of current population and return it */

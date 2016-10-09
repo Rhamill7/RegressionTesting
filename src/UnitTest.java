@@ -9,18 +9,18 @@ public class UnitTest implements Comparable<UnitTest> {
 	public static char[] target = "Hello World!".toCharArray();
 	public static Random rand = new Random();
 	private static int[] gene;
-	private int fitness;
+	private float fitness;
 
 	public UnitTest(int[] gene) {
 		this.gene = gene;
-		// this.fitness = calculateFitness(gene);
+		this.fitness = calculateFitness(gene);
 	}
 
 	public int[] getGene() {
 		return gene;
 	}
 
-	public int getFitness() {
+	public float getFitness() {
 		return fitness;
 	}
 
@@ -39,13 +39,16 @@ public class UnitTest implements Comparable<UnitTest> {
 	// }
 
 	/* calculate fitness using fitness function */
-	private static int calculateFitness(int[] gene) {
+	private static float calculateFitness(int[] gene) {
 		int fitness = 0;
+		int faults = 0;
 		// char[] geneChars = gene.toCharArray();
-		// for (int i = 0; i < geneChars.length; i++) {
-		// work out how close each letter is by subtracting their ASCII
-		// values
-		// add the results together, if it is the same this will equal 0.
+		for (int i = 0; i < gene.length; i++) {
+			if (gene[i] == 1) {
+				faults++;
+			}
+		}
+		float APFD = (faults/gene.length);
 		// fitness += Math.abs(((int) geneChars[i]) - ((int) target[i]));
 		// }
 		return fitness;

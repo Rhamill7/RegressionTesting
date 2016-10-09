@@ -14,7 +14,6 @@ public class Main {
 
 			long start = System.currentTimeMillis();
 			Population p = new Population(); 
-			//p.getUnitTests();
 			p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber);
 		//	UnitTest bestGene = p.getPopulation()[0];
 		//	while (bestGene.getFitness() != 0 && numberOfGenerations < 20000) {
