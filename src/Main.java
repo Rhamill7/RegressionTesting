@@ -4,7 +4,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		/* Modify Variables to adjust results */
-		int populationSize = 5; // 100
+		int populationSize = 216; // 100
 		int numberOfGenerations = 1;
 		float crossoverRatio = 0.89f;// 0.2 // 0.1f = 10%
 		float mutationRatio = 0.15f; // 0.9// probability of mutation for any

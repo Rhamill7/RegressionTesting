@@ -24,26 +24,8 @@ public class UnitTest implements Comparable<UnitTest> {
 		return fitness;
 	}
 
-	public static UnitTest getUnitTests(int test, int faultNumber) {
-		String delimiter = "unitest" + test + ":";
-		String read = "";
-		File file = new File("nanoxmltestfaultmatrix.txt");
-		int[] tests = new int[faultNumber];
-		try {
-			Scanner scan = new Scanner(file);
-			scan.useDelimiter(delimiter);
-			while (scan.hasNext() && !read.contains("unitest" + test + 1 + ":")) {
-				read = scan.next();
-				System.out.println(read);
-				// tests[i] = testResult;
-			}
-
-			scan.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new UnitTest(tests);
+	public static UnitTest getUnitTests(int[] test) {
+		return new UnitTest(test);
 
 	}
 
