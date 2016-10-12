@@ -18,11 +18,13 @@ public class Main {
 			p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber, geneLength);
 			Chromosome bestGene = p.getPopulation()[0];
 		
-			while (bestGene.getFitness() != 0 && numberOfGenerations < 20000) {
+			while (bestGene.getFitness() != 1 && numberOfGenerations < 20000) {
+				//System.out.println("hello");
 				p.evolve(); 
 				//p.random();
-				// bestGene = p.hillClimber();
-			//	bestGene = p.getPopulation()[0];
+				
+				//bestGene = p.getPopulation()[4];
+				System.out.println(p.getPopulation());
 			//	numberOfGenerations++;
 
 			}

@@ -128,45 +128,6 @@ public class Population {
 		return parents;
 	}
 
-//
-// /* Implements HillClimber */
-// public UnitTest hillClimber() {
-// UnitTest best = null;
-// // start at random point
-// int index = rand.nextInt(p.length);
-// best = p[index];
-// boolean peak = false;
-//
-// for (int j = 0; j < 10; j++) {
-// index = rand.nextInt(p.length);
-//
-// UnitTest current = p[index];
-// UnitTest upper = p[index + 1];
-// UnitTest lower = p[index - 1];
-//
-// while (peak != true) {
-//
-// if (upper.getFitness() < current.getFitness()) {
-// lower = current;
-// current = upper;
-// upper = p[index + 2];
-//
-// } else if (lower.getFitness() < current.getFitness()) {
-// upper = current;
-// current = lower;
-// lower = p[index - 2];
-// } else {
-// peak = true;
-// }
-//
-// }
-// // System.out.println(best);
-// }
-//
-// return best;
-//
-// }
-//
 	/* implements random algorithm */
 	public void random() {
 		Chromosome[] randomPopulation = new Chromosome[p.length];
