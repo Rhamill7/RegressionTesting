@@ -1,12 +1,13 @@
+import java.util.ArrayList;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		/* Modify Variables to adjust results */
-		int populationSize = 1000; // 100
+		int populationSize = 2000; // 100
 		int numberOfGenerations = 1;
-		float crossoverRatio = 0.5f;// 0.2 // 0.1f = 10%
+		float crossoverRatio = 0.9f;// 0.2 // 0.1f = 10%
 		float mutationRatio = 0.05f; // 0.9// probability of mutation for any
 		int faultNumber = 9;
 		int geneLength = 5;
@@ -18,20 +19,23 @@ public class Main {
 		p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber, geneLength, totalTests);
 		Chromosome bestGene = p.getPopulation()[0];
 		Chromosome worstGene = p.getPopulation()[215];
-	//	System.out.println(numberOfGenerations);
 		while (bestGene.getFitness() != 0 && numberOfGenerations < 200000) {
 			p.evolve();
 		//	System.out.println(numberOfGenerations);
-			
 			// p.random();
 			 bestGene = p.getPopulation()[0];
 			 worstGene = p.getPopulation()[215];
+			ArrayList<int[]> order = (bestGene.getGene());
+			for (int i =0; i<order.size();i++){
+				int[] orders = order.get(i);
+				System.out.println(i);
+				for(int j = 0;j<orders.length; j++){
+					System.out.print(orders[j]);
+				}
+				System.out.print("\n");
+			}
 			 System.out.println(bestGene.getFitness());
-			 System.out.println(worstGene.getFitness());
-			//System.out.println(p.getPopulation());
 			 numberOfGenerations++;
-			 
-
 		}
 		long finish = System.currentTimeMillis();
 

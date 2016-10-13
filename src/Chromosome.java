@@ -10,6 +10,7 @@ public class Chromosome implements Comparable<Chromosome> {
 	/* What we are aiming for */
 	public static Random rand = new Random();
 	private static ArrayList<int[]> gene;
+	private static ArrayList<int[]> pool;
 	private float fitness;
 	private static int totalTests;
 	private static int faultNumber;
@@ -26,51 +27,22 @@ public class Chromosome implements Comparable<Chromosome> {
 	public float getFitness() {
 		return fitness;
 	}
-
-	public static Chromosome generateRandom(int geneLength, int tTests, int fNumber) {
-
+	
+	public static void setData(ArrayList<int[]> allTests, int tTests, int fNumber) {
+		pool=allTests;
 		totalTests = tTests;
 		faultNumber = fNumber;
+	}
+
+	public static Chromosome generateRandom(int geneLength ) {
 		ArrayList<int[]> gene = new ArrayList<int[]>();
 		for (int j = 0; j < geneLength; j++) {
-			int[] unitTest = new int[geneLength];
-			int testNo = rand.nextInt(totalTests - 1);
-			// System.out.println(testNo);
-			unitTest = faults(faultNumber, testNo);
-			gene.add(unitTest);
-			// unitTests[i] = new TestSuite(faults(numFaults, testno));
-			// System.out.println(unitTests[i].getGene());
+			gene.add(pool.get(rand.nextInt(pool.size()-1)));
 		}
-
 		return new Chromosome(gene);
 	}
 
-	private static int[] faults(int numFaults, int testNo) {
-		int[] vals = new int[numFaults];
-		File file = new File("nanoxmltestfaultmatrix.txt");
-		String title = "";
-		int val;
-		try {
-			Scanner scan = new Scanner(file);
-			while (!title.equals("unitest" + testNo + ":") && scan.hasNext()) {
-				title = scan.nextLine();
-			}
-			for (int i = 0; i < numFaults - 1; i++) {
-				scan.nextLine();
-				val = scan.nextInt();
-				vals[i] = val;
-				scan.nextLine();
-			}
-			scan.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Error! NanoXML test faultmatrix file not found!");
-		}
-		for (int i = 0; i < numFaults; i++) {
-			// System.out.print(vals[i] + " ");
-		}
-
-		return vals;
-	}
+	
 
 	/* calculate fitness using fitness function */
 	public float calculateFitness(List<int[]> gene) {
@@ -126,7 +98,7 @@ public class Chromosome implements Comparable<Chromosome> {
 				child2.add(geneArray2.get(i));
 			}
 		}
-		//System.out.println(child1);
+		// System.out.println(child1);
 
 		return new Chromosome[] { new Chromosome(child1), new Chromosome(child2) };
 	}

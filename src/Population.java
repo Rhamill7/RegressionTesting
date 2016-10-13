@@ -14,9 +14,9 @@ public class Population {
 	public Random rand = new Random();
 	float mutation;
 	float crossover;
-	int faultNumber;
+	static int faultNumber;
 	int geneLength;
-	int totalTests;
+	static int totalTests;
 
 	public Population() {
 	}
@@ -30,9 +30,12 @@ public class Population {
 		this.faultNumber = faultNumber;
 		this.geneLength = geneLength;
 		this.totalTests = totalTests;
+		
+		Chromosome.setData(fileScanner(),totalTests, faultNumber);
 
+		
 		for (int i = 0; i < populationSize; i++) {
-			pArr.add(Chromosome.generateRandom(geneLength, totalTests, faultNumber));
+			pArr.add(Chromosome.generateRandom(geneLength));
 		}
 	//	System.out.println(pArr);
 
@@ -40,6 +43,37 @@ public class Population {
 		p = pArr.toArray(p);
 		/* Sort in order of fitness */
 		Arrays.sort(p);
+	}
+	
+	private static ArrayList<int[]> fileScanner() {
+		ArrayList<int[]> pool = new ArrayList<int[]>();
+
+		File file = new File("nanoxmltestfaultmatrix.txt");
+		String title = "";
+		int val;
+		try {
+			Scanner scan = new Scanner(file);
+			for (int j = 0; j < totalTests; j++) {
+				int[] vals = new int[faultNumber];
+				while (!title.equals("unitest" + j + ":") && scan.hasNext()) {
+					title = scan.nextLine();
+				}
+				for (int i = 0; i < faultNumber - 1; i++) {
+					scan.nextLine();
+					val = scan.nextInt();
+					vals[i] = val;
+					scan.nextLine();
+				}
+			pool.add(vals);
+			}
+			scan.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error! NanoXML test faultmatrix file not found!");
+		}
+		for (int i = 0; i < faultNumber; i++) {
+			// System.out.print(vals[i] + " ");
+		}
+		return pool;
 	}
 
 	/* create copy of current population and return it */
@@ -104,7 +138,7 @@ public class Population {
 	public void random() {
 		Chromosome[] randomPopulation = new Chromosome[p.length];
 		for (int i = 0; i < p.length; i++) {
-			randomPopulation[i] = Chromosome.generateRandom(geneLength, totalTests, faultNumber);
+			randomPopulation[i] = Chromosome.generateRandom(geneLength);
 		}
 		/* Sort in order of fitness */
 		Arrays.sort(randomPopulation);
