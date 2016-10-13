@@ -10,32 +10,33 @@ public class Main {
 		float mutationRatio = 0.15f; // 0.9// probability of mutation for any
 		int faultNumber = 9;
 		int geneLength = 5;
+		int totalTests = 216;
 
-	//	for (int i = 0; i < 10; i++) {
+		// for (int i = 0; i < 10; i++) {
+		long start = System.currentTimeMillis();
+		Population p = new Population();
+		p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber, geneLength, totalTests);
+		Chromosome bestGene = p.getPopulation()[0];
+		System.out.println(numberOfGenerations);
+		while (bestGene.getFitness() != 0 && numberOfGenerations < 20000) {
+			p.evolve();
+			System.out.println(numberOfGenerations);
+			// p.random();
+			// bestGene = p.getPopulation()[4];
+			//System.out.println(p.getPopulation());
+			 numberOfGenerations++;
+			 
 
-			long start = System.currentTimeMillis();
-			Population p = new Population(); 
-			p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber, geneLength);
-			Chromosome bestGene = p.getPopulation()[0];
-		
-			while (bestGene.getFitness() != 1 && numberOfGenerations < 20000) {
-				//System.out.println("hello");
-				p.evolve(); 
-				//p.random();
-				
-				//bestGene = p.getPopulation()[4];
-				System.out.println(p.getPopulation());
-			//	numberOfGenerations++;
+		}
+		long finish = System.currentTimeMillis();
 
-			}
-			long finish = System.currentTimeMillis();
+		// System.out.println("Gen Number: " + numberOfGenerations + " Best
+		// Gene: " + bestGene.getGene()
+		// + " Current Fitness " + bestGene.getFitness() + " Time elapsed in ms:
+		// " + (finish - start));
 
-			
-		//	System.out.println("Gen Number: " + numberOfGenerations + " Best Gene: " + bestGene.getGene()
-			//		+ " Current Fitness " + bestGene.getFitness() + " Time elapsed in ms: " + (finish - start));
-
-			numberOfGenerations = 1;
-		//}
+		numberOfGenerations = 1;
+		// }
 	}
 
 }

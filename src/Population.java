@@ -14,60 +14,32 @@ public class Population {
 	public Random rand = new Random();
 	float mutation;
 	float crossover;
+	int faultNumber;
+	int geneLength;
+	int totalTests;
 
 	public Population() {
 	}
 
 	public void createPopulation(int populationSize, float crossoverRatio, float mutationRatio, int faultNumber,
-			int geneLength) {
+			int geneLength, int totalTests) {
 
 		this.crossover = crossoverRatio;
 		this.mutation = mutationRatio;
-		this.pArr = new ArrayList<Chromosome>(); // [populationSize];
+		this.pArr = new ArrayList<Chromosome>();
+		this.faultNumber = faultNumber;
+		this.geneLength = geneLength;
+		this.totalTests = totalTests;
 
-		String read = "";
-		int fault = 0, testCase = 0;
-		File file = new File("nanoxmltestfaultmatrix.txt");
-		int[] tests = new int[faultNumber];
-		ArrayList<int[]> pool = new ArrayList<int[]>();
-
-		/*
-		 * scan each line until integer is found, add this to array and create
-		 * new Unit Tests from array of faults
-		 */
-		try {
-			Scanner scan = new Scanner(file);
-			while (scan.hasNext()) {
-				if (scan.hasNextInt()) {
-					int value = scan.nextInt();
-					// System.out.println(value + " " + fault);
-					tests[fault] = value;
-					// System.out.println(value);
-					fault++;
-					if (fault == faultNumber) {
-						fault = 0;
-						pool.add(tests);
-						// System.out.println(tests);
-					}
-				} else {
-					read = scan.next();
-				}
-			}
-			scan.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Chromosome.setPool(pool);
 		for (int i = 0; i < populationSize; i++) {
-			pArr.add(Chromosome.generateRandom());
+			pArr.add(Chromosome.generateRandom(geneLength, totalTests, faultNumber));
 		}
-		System.out.println(pArr);
+	//	System.out.println(pArr);
 
 		p = new Chromosome[pArr.size()];
 		p = pArr.toArray(p);
 		/* Sort in order of fitness */
-		// Arrays.sort(p);
+		Arrays.sort(p);
 	}
 
 	/* create copy of current population and return it */
@@ -132,7 +104,7 @@ public class Population {
 	public void random() {
 		Chromosome[] randomPopulation = new Chromosome[p.length];
 		for (int i = 0; i < p.length; i++) {
-			randomPopulation[i] = Chromosome.generateRandom();
+			randomPopulation[i] = Chromosome.generateRandom(geneLength, totalTests, faultNumber);
 		}
 		/* Sort in order of fitness */
 		Arrays.sort(randomPopulation);
