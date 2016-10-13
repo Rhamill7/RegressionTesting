@@ -17,7 +17,7 @@ public class Chromosome implements Comparable<Chromosome> {
 
 	public Chromosome(ArrayList<int[]> gene) {
 		this.gene = gene;
-		 this.fitness = calculateFitness(gene, faultNumber, totalTests);
+		 this.fitness = calculateFitness(gene);
 	}
 
 	public ArrayList<int[]> getGene() {
@@ -69,15 +69,15 @@ public class Chromosome implements Comparable<Chromosome> {
 		for (int i = 0; i < numFaults; i++) {
 			//System.out.print(vals[i] + " ");
 		}
-	//	System.out.println("\n");
+	
 		return vals;
 	}
 
 	/* calculate fitness using fitness function */
-	public float calculateFitness(List<int[]> gene, int numFaults, int noTests) {
+	public float calculateFitness(List<int[]> gene) {
 		int suiteTotal = 0;
 		boolean fails = false;
-		for (int i = 0; i < numFaults; i++) {
+		for (int i = 0; i < faultNumber; i++) {
 			for (int j = 0; j < gene.size(); j++) {
 				if (gene.get(j)[i] == 1) {
 					suiteTotal += (j + 1);
@@ -87,12 +87,12 @@ public class Chromosome implements Comparable<Chromosome> {
 				
 			}
 			if(!fails) {
-				suiteTotal += (noTests + 1);
+				suiteTotal += (totalTests + 1);
 			}
 			fails = false;
 		}
 
-		fitness = 1 - ((suiteTotal / (numFaults * noTests)) + (1 / (2 * noTests)));
+		fitness = 1 - (((float) suiteTotal / ((float) faultNumber * (float)totalTests)) + (float)(1 / (2 * totalTests)));
 	//	System.out.println(fitness);
 		return fitness;
 	}
@@ -151,9 +151,9 @@ public class Chromosome implements Comparable<Chromosome> {
 	// Compare Method for comparing fitness
 	@Override
 	public int compareTo(Chromosome gene) {
-		if (fitness < gene.fitness) {
+		if (fitness > gene.fitness) {
 			return -1;
-		} else if (fitness > gene.fitness) {
+		} else if (fitness < gene.fitness) {
 			return 1;
 		}
 		return 0;
