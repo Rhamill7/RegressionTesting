@@ -4,9 +4,9 @@ public class Main {
 	public static void main(String[] args) {
 
 		/* Modify Variables to adjust results */
-		int populationSize = 500; // 100
+		int populationSize = 1000; // 100
 		int numberOfGenerations = 1;
-		float crossoverRatio = 0.7f;// 0.2 // 0.1f = 10%
+		float crossoverRatio = 0.5f;// 0.2 // 0.1f = 10%
 		float mutationRatio = 0.05f; // 0.9// probability of mutation for any
 		int faultNumber = 9;
 		int geneLength = 5;
@@ -21,13 +21,13 @@ public class Main {
 	//	System.out.println(numberOfGenerations);
 		while (bestGene.getFitness() != 0 && numberOfGenerations < 200000) {
 			p.evolve();
-			System.out.println(numberOfGenerations);
+		//	System.out.println(numberOfGenerations);
 			
 			// p.random();
 			 bestGene = p.getPopulation()[0];
 			 worstGene = p.getPopulation()[215];
 			 System.out.println(bestGene.getFitness());
-				System.out.println(worstGene.getFitness());
+			 System.out.println(worstGene.getFitness());
 			//System.out.println(p.getPopulation());
 			 numberOfGenerations++;
 			 

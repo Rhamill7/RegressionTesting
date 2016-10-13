@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Chromosome implements Comparable<Chromosome> {
 
 	/* What we are aiming for */
-	//public static int target = 5;
 	public static Random rand = new Random();
 	private static ArrayList<int[]> gene;
 	private float fitness;
@@ -17,7 +16,7 @@ public class Chromosome implements Comparable<Chromosome> {
 
 	public Chromosome(ArrayList<int[]> gene) {
 		this.gene = gene;
-		 this.fitness = calculateFitness(gene);
+		this.fitness = calculateFitness(gene);
 	}
 
 	public ArrayList<int[]> getGene() {
@@ -29,14 +28,14 @@ public class Chromosome implements Comparable<Chromosome> {
 	}
 
 	public static Chromosome generateRandom(int geneLength, int tTests, int fNumber) {
-		
+
 		totalTests = tTests;
 		faultNumber = fNumber;
 		ArrayList<int[]> gene = new ArrayList<int[]>();
 		for (int j = 0; j < geneLength; j++) {
 			int[] unitTest = new int[geneLength];
 			int testNo = rand.nextInt(totalTests - 1);
-		//	System.out.println(testNo);
+			// System.out.println(testNo);
 			unitTest = faults(faultNumber, testNo);
 			gene.add(unitTest);
 			// unitTests[i] = new TestSuite(faults(numFaults, testno));
@@ -67,9 +66,9 @@ public class Chromosome implements Comparable<Chromosome> {
 			System.out.println("Error! NanoXML test faultmatrix file not found!");
 		}
 		for (int i = 0; i < numFaults; i++) {
-			//System.out.print(vals[i] + " ");
+			// System.out.print(vals[i] + " ");
 		}
-	
+
 		return vals;
 	}
 
@@ -84,16 +83,17 @@ public class Chromosome implements Comparable<Chromosome> {
 					fails = true;
 					break;
 				}
-				
+
 			}
-			if(!fails) {
+			if (!fails) {
 				suiteTotal += (totalTests + 1);
 			}
 			fails = false;
 		}
 
-		fitness = 1 - (((float) suiteTotal / ((float) faultNumber * (float)totalTests)) + (float)(1 / (2 * totalTests)));
-	//	System.out.println(fitness);
+		fitness = 1
+				- (((float) suiteTotal / ((float) faultNumber * (float) totalTests)) + (float) (1 / (2 * totalTests)));
+		// System.out.println(fitness);
 		return fitness;
 	}
 
@@ -126,6 +126,7 @@ public class Chromosome implements Comparable<Chromosome> {
 				child2.add(geneArray2.get(i));
 			}
 		}
+		//System.out.println(child1);
 
 		return new Chromosome[] { new Chromosome(child1), new Chromosome(child2) };
 	}
@@ -133,7 +134,7 @@ public class Chromosome implements Comparable<Chromosome> {
 	/* mutation performed here */
 	public Chromosome mutate() {
 		// char[] geneChars = gene.toCharArray();
-		int one = rand.nextInt(gene.size()-1);
+		int one = rand.nextInt(gene.size() - 1);
 		int two = 0;
 		if (one == gene.size()) {
 			two = one - 1;
