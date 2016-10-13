@@ -21,21 +21,26 @@ public class Main {
 		Chromosome worstGene = p.getPopulation()[215];
 		while (bestGene.getFitness() != 0 && numberOfGenerations < 200000) {
 			p.evolve();
-		//	System.out.println(numberOfGenerations);
+			// System.out.println(numberOfGenerations);
 			// p.random();
-			 bestGene = p.getPopulation()[0];
-			 worstGene = p.getPopulation()[215];
+			bestGene = p.getPopulation()[0];
+			worstGene = p.getPopulation()[215];
+
+			/*
+			 * Testing Output
+			 * */
 			ArrayList<int[]> order = (bestGene.getGene());
-			for (int i =0; i<order.size();i++){
+			for (int i = 0; i < order.size(); i++) {
 				int[] orders = order.get(i);
 				System.out.println(i);
-				for(int j = 0;j<orders.length; j++){
+				for (int j = 0; j < orders.length; j++) {
 					System.out.print(orders[j]);
 				}
 				System.out.print("\n");
 			}
-			 System.out.println(bestGene.getFitness());
-			 numberOfGenerations++;
+			
+			System.out.println(bestGene.getFitness());
+			numberOfGenerations++;
 		}
 		long finish = System.currentTimeMillis();
 
