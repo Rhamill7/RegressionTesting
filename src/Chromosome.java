@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -36,9 +37,14 @@ public class Chromosome implements Comparable<Chromosome> {
 
 	public static Chromosome generateRandom(int geneLength ) {
 		ArrayList<int[]> gene = new ArrayList<int[]>();
+		System.out.println("New entry");
 		for (int j = 0; j < geneLength; j++) {
-			gene.add(pool.get(rand.nextInt(pool.size()-1)));
+			int[] test = pool.get(rand.nextInt(pool.size()-1));
+		//	System.out.println(Arrays.toString(test));
+			gene.add(test);
 		}
+	//System.out.println(gene);
+	
 		return new Chromosome(gene);
 	}
 
@@ -124,9 +130,9 @@ public class Chromosome implements Comparable<Chromosome> {
 	// Compare Method for comparing fitness
 	@Override
 	public int compareTo(Chromosome gene) {
-		if (fitness > gene.fitness) {
+		if (fitness < gene.fitness) {
 			return -1;
-		} else if (fitness < gene.fitness) {
+		} else if (fitness > gene.fitness) {
 			return 1;
 		}
 		return 0;

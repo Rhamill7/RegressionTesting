@@ -1,10 +1,10 @@
-import java.awt.List;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -23,8 +23,8 @@ public class Population {
 
 	public Population() {
 	}
-	
-	public Integer getKey(int[] order){
+
+	public Integer getKey(int[] order) {
 		return key.get(order);
 	}
 
@@ -37,30 +37,31 @@ public class Population {
 		this.faultNumber = faultNumber;
 		this.geneLength = geneLength;
 		this.totalTests = totalTests;
-		
-		Chromosome.setData(fileScanner(),totalTests, faultNumber);
 
-		
+		Chromosome.setData(fileScanner(), totalTests, faultNumber);
+
 		for (int i = 0; i < populationSize; i++) {
 			pArr.add(Chromosome.generateRandom(geneLength));
+			// System.out.println(pArr);
 		}
-	//	System.out.println(pArr);
+		// System.out.println(pArr);
 
 		p = new Chromosome[pArr.size()];
 		p = pArr.toArray(p);
 		/* Sort in order of fitness */
 		Arrays.sort(p);
 	}
-	
+
 	private static ArrayList<int[]> fileScanner() {
 		ArrayList<int[]> pool = new ArrayList<int[]>();
-		
+
 		key = new HashMap<int[], Integer>();
-		File file = new File("nanoxmltestfaultmatrix.txt");
+		File file = new File("nanoxmltestfaultmatrix.txt");   //"fault-matrix-1000.dat");   //"nanoxmltestfaultmatrix.txt");
 		String title = "";
 		int val;
 		try {
 			Scanner scan = new Scanner(file);
+		//DataInputStream in = new DataInputStream(new FileInputStream("fault-matrix-1000.dat"));
 			for (int j = 0; j < totalTests; j++) {
 				int[] vals = new int[faultNumber];
 				while (!title.equals("unitest" + j + ":") && scan.hasNext()) {
@@ -72,16 +73,13 @@ public class Population {
 					vals[i] = val;
 					scan.nextLine();
 				}
-			pool.add(vals);
-			key.put(vals, j);
-			
+				pool.add(vals);
+				key.put(vals, j);
+
 			}
 			scan.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error! NanoXML test faultmatrix file not found!");
-		}
-		for (int i = 0; i < faultNumber; i++) {
-			// System.out.print(vals[i] + " ");
 		}
 		return pool;
 	}
@@ -103,6 +101,18 @@ public class Population {
 			if (rand.nextFloat() <= crossover) {
 
 				Chromosome[] parents = selectParents();
+				//
+				// for (int j=0; j<parents.length; j++){
+				// Chromosome test = parents[j];
+				// System.out.println("Parent "+ j);
+				// for (int i = 0; i <
+				// ; i++) {
+				// int[] orders = test.get(i);
+				//
+				// System.out.print(getKey(orders) + " ");
+				// }
+				// System.out.println("\n");
+				// }
 				Chromosome[] children = parents[0].crossover(parents[1]);
 
 				pDash[index++] = children[0];
@@ -129,13 +139,14 @@ public class Population {
 
 	/* Selection done here TOURNAMENT STYLE! FIGHTTT!! */
 	private Chromosome[] selectParents() {
+	//	System.out.println("Made it to here");
 		Chromosome[] parents = new Chromosome[2];
 		// Randomly select two parents via tournament selection.
 		for (int i = 0; i < 2; i++) {
 			parents[i] = p[rand.nextInt(p.length)]; // get random parent
 			for (int j = 0; j < tournamentSize; j++) { // compare with others
 				int index = rand.nextInt(p.length);
-				if (p[index].compareTo(parents[i]) < 0) {
+				if ((p[index].compareTo(parents[i]) < 0) || p[index].compareTo(parents[i]) == 0) {
 					parents[i] = p[index];
 				}
 			}
