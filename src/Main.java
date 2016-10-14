@@ -19,9 +19,9 @@ public class Main {
 		p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber, geneLength, totalTests);
 		Chromosome bestGene = p.getPopulation()[0];
 		Chromosome worstGene = p.getPopulation()[215];
-		while (bestGene.getFitness() != 0 && numberOfGenerations < 200000) {
+		while (bestGene.getFitness() != 0 && numberOfGenerations < 1000) {
 			p.evolve();
-			// System.out.println(numberOfGenerations);
+			
 			// p.random();
 			bestGene = p.getPopulation()[0];
 			worstGene = p.getPopulation()[215];
@@ -32,22 +32,17 @@ public class Main {
 			ArrayList<int[]> order = (bestGene.getGene());
 			for (int i = 0; i < order.size(); i++) {
 				int[] orders = order.get(i);
-				System.out.println(i);
-				for (int j = 0; j < orders.length; j++) {
-					System.out.print(orders[j]);
-				}
-				System.out.print("\n");
-			}
+				System.out.print(p.getKey(orders) + " ");
 			
+			}
+			System.out.print("\n");
 			System.out.println(bestGene.getFitness());
 			numberOfGenerations++;
 		}
 		long finish = System.currentTimeMillis();
 
-		// System.out.println("Gen Number: " + numberOfGenerations + " Best
-		// Gene: " + bestGene.getGene()
-		// + " Current Fitness " + bestGene.getFitness() + " Time elapsed in ms:
-		// " + (finish - start));
+		 System.out.println("Gen Number: " + numberOfGenerations + " BestGene: " + bestGene.getGene()
+		 + " Current Fitness " + bestGene.getFitness() + " Time elapsed in ms:" + (finish - start));
 
 		numberOfGenerations = 1;
 		// }

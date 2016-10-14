@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,8 +19,13 @@ public class Population {
 	static int faultNumber;
 	int geneLength;
 	static int totalTests;
+	static HashMap<int[], Integer> key;
 
 	public Population() {
+	}
+	
+	public Integer getKey(int[] order){
+		return key.get(order);
 	}
 
 	public void createPopulation(int populationSize, float crossoverRatio, float mutationRatio, int faultNumber,
@@ -47,7 +54,8 @@ public class Population {
 	
 	private static ArrayList<int[]> fileScanner() {
 		ArrayList<int[]> pool = new ArrayList<int[]>();
-
+		
+		key = new HashMap<int[], Integer>();
 		File file = new File("nanoxmltestfaultmatrix.txt");
 		String title = "";
 		int val;
@@ -65,6 +73,8 @@ public class Population {
 					scan.nextLine();
 				}
 			pool.add(vals);
+			key.put(vals, j);
+			
 			}
 			scan.close();
 		} catch (FileNotFoundException e) {
@@ -115,7 +125,6 @@ public class Population {
 		}
 		Arrays.sort(pDash); // sort based on fitness
 		p = pDash; // P<-P'
-
 	}
 
 	/* Selection done here TOURNAMENT STYLE! FIGHTTT!! */
