@@ -13,7 +13,7 @@ public class Chromosome implements Comparable<Chromosome> {
 
 	/* What we are aiming for */
 	public static Random rand = new Random();
-	private static ArrayList<Integer> gene;
+	private ArrayList<Integer> gene;
 	private static ArrayList<Integer> pool;
 	private double fitness;
 	private static int totalTests;
@@ -40,15 +40,15 @@ public class Chromosome implements Comparable<Chromosome> {
 		faultNumber = fNumber;
 	}
 
-	public static Chromosome generateRandom(int geneLength) {
-		//System.out.println("new gene");
+	static Chromosome generateRandom(int geneLength) {
+		// System.out.println("new gene");
 		ArrayList<Integer> gene = new ArrayList<Integer>();
 		for (int j = 0; j < geneLength; j++) {
 			int test = pool.get(rand.nextInt(pool.size() - 1));
-		//	System.out.println(test);
+			// System.out.println(test);
 			gene.add(test);
 		}
-		
+
 		return new Chromosome(gene);
 	}
 
@@ -90,25 +90,28 @@ public class Chromosome implements Comparable<Chromosome> {
 
 		/* Variable to modify split point */
 		int splitPoint = rand.nextInt(geneArray1.size());
-
+		// System.out.println(splitPoint);
 		ArrayList<Integer> child1 = new ArrayList<Integer>(geneArray1.subList(0, splitPoint));
 		// get other half of 2nd array but do not use duplicates
 
 		for (int i = splitPoint; i < geneArray1.size(); i++) {
-			if (!(geneArray1.get(i).equals(geneArray2.get(i)))) {
-				child1.add(geneArray2.get(i));
-			} else {
+			// if (!(geneArray1.get(i).equals(geneArray2.get(i)))) { //if i1 is
+			// not i2
+			if (child1.contains(geneArray2.get(i))) {
 				child1.add(geneArray1.get(i));
+			} else {
+				child1.add(geneArray2.get(i));
 			}
 		}
 
 		ArrayList<Integer> child2 = new ArrayList<Integer>(geneArray2.subList(0, splitPoint));
 		for (int i = splitPoint; i < geneArray1.size(); i++) {
-			if (!(geneArray1.get(i).equals(geneArray2.get(i)))) {
-				child2.add(geneArray1.get(i));
-			} else {
+			if (child2.contains(geneArray1.get(i))) {
 				child2.add(geneArray2.get(i));
+			} else {
+				child2.add(geneArray1.get(i));
 			}
+
 		}
 
 		return new Chromosome[] { new Chromosome(child1), new Chromosome(child2) };
@@ -118,6 +121,7 @@ public class Chromosome implements Comparable<Chromosome> {
 	public Chromosome mutate() {
 		// char[] geneChars = gene.toCharArray();
 		int one = rand.nextInt(gene.size() - 1);
+		// System.out.println(one);
 		int two = 0;
 		if (one == gene.size()) {
 			two = one - 1;

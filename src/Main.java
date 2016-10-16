@@ -5,13 +5,13 @@ public class Main {
 	public static void main(String[] args) {
 
 		/* Modify Variables to adjust results */
-		int populationSize = 500; // 100
+		int populationSize = 1000; // 100
 		int numberOfGenerations = 1;
 		float crossoverRatio = 0.7f;// 0.2 // 0.1f = 10%
-		float mutationRatio = 0.15f; // 0.9// probability of mutation for any
-		int faultNumber = 9; // 38; //9;
-		int geneLength = 5;
-		int totalTests = 216; // 1000;//216;
+		float mutationRatio = 0.5f; // 0.9// probability of mutation for any
+		int faultNumber = 38; // 38; //9;
+		int geneLength = 20;
+		int totalTests = 1000; // 1000;//216;
 
 		// for (int i = 0; i < 10; i++) {
 		long start = System.currentTimeMillis();
@@ -19,14 +19,14 @@ public class Main {
 		p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber, geneLength, totalTests);
 		Chromosome bestGene = p.getPopulation()[0];
 		// Chromosome worstGene = p.getPopulation()[215];
-		while (bestGene.getFitness() != 1 && numberOfGenerations < 100000) {
+		while (bestGene.getFitness() != 1 && numberOfGenerations < 50) {
 			p.evolve();
 			// p.random();
 			bestGene = p.getPopulation()[0];
 			// worstGene = p.getPopulation()[215];
 
-		//	System.out.println(bestGene.getGene().toString());
-		//	System.out.println("best " + bestGene.getFitness());
+			//System.out.println(bestGene.getGene().toString());
+			System.out.println("best " + bestGene.getFitness());
 			// System.out.println("Worst " + worstGene.getFitness());
 			numberOfGenerations++;
 		}
