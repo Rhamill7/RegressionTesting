@@ -2,78 +2,82 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 public class Chromosome implements Comparable<Chromosome> {
 
 	/* What we are aiming for */
 	public static Random rand = new Random();
-	private static ArrayList<int[]> gene;
-	private static ArrayList<int[]> pool;
+	private static ArrayList<Integer> gene;
+	private static ArrayList<Integer> pool;
 	private double fitness;
 	private static int totalTests;
 	private static int faultNumber;
+	static HashMap<Integer, int[]> key;
 
-	public Chromosome(ArrayList<int[]> gene) {
+	public Chromosome(ArrayList<Integer> gene) {
 		this.gene = gene;
 		this.fitness = calculateFitness(gene);
 	}
 
-	public ArrayList<int[]> getGene() {
+	public ArrayList<Integer> getGene() {
 		return gene;
 	}
 
 	public double getFitness() {
 		return fitness;
 	}
-	
-	public static void setData(ArrayList<int[]> allTests, int tTests, int fNumber) {
-		pool=allTests;
+
+	public static void setData(ArrayList<Integer> allTests, HashMap<Integer, int[]> keyin, int tTests, int fNumber) {
+		pool = allTests;
+		key = keyin;
 		totalTests = tTests;
 		faultNumber = fNumber;
 	}
 
-	public static Chromosome generateRandom(int geneLength ) {
-		ArrayList<int[]> gene = new ArrayList<int[]>();
-		//System.out.println("New entry");
+	public static Chromosome generateRandom(int geneLength) {
+		//System.out.println("new gene");
+		ArrayList<Integer> gene = new ArrayList<Integer>();
 		for (int j = 0; j < geneLength; j++) {
-			int[] test = pool.get(rand.nextInt(pool.size()-1));
-		//	System.out.println(Arrays.toString(test));
+			int test = pool.get(rand.nextInt(pool.size() - 1));
+		//	System.out.println(test);
 			gene.add(test);
 		}
-	//System.out.println(gene);
-	
+		
 		return new Chromosome(gene);
 	}
 
 	/* calculate fitness using fitness function */
-	public double calculateFitness(List<int[]> gene) {
+	public double calculateFitness(List<Integer> gene) {
 		int suiteTotal = 0;
 		boolean fails = false;
 		for (int i = 0; i < faultNumber; i++) {
 			for (int j = 0; j < gene.size(); j++) {
-				if (gene.get(j)[i] == 1) {
+				if (key.get(gene.get(j))[i] == 1) {
 					suiteTotal += (j + 1);
 					fails = true;
 					break;
 				}
-
 			}
 			if (!fails) {
 				suiteTotal += (gene.size() + 1);
 			}
 			fails = false;
 		}
-		//System.out.println(suiteTotal);
-		double test = (double)1/(double)(2*gene.size());
-		double test2 =(double) suiteTotal /((double) ( faultNumber * gene.size()));
-		double test3 =  1- (test + test2);
-//		System.out.println(test);
-//		System.out.println(test2);
-//		System.out.println(test3);
-		fitness = (double) 1 - ((double) suiteTotal /((double) ( faultNumber * gene.size())) + ((double) 1 / (double)(2 * gene.size())));
+		// double test = (double)1/(double)(2*gene.size());
+		// double test2 =(double) suiteTotal /((double) ( faultNumber *
+		// gene.size()));
+		// double test3 = 1- (test + test2);
+		// System.out.println(test);
+		// System.out.println(test2);
+		// System.out.println(test3);
+		fitness = (double) 1 - ((double) suiteTotal / ((double) (faultNumber * gene.size()))
+				+ ((double) 1 / (double) (2 * gene.size())));
 		// System.out.println(fitness);
 		return fitness;
 	}
@@ -81,14 +85,13 @@ public class Chromosome implements Comparable<Chromosome> {
 	/* Crossover Performed here */
 	public Chromosome[] crossover(Chromosome mate) {
 
-		ArrayList<int[]> geneArray1 = gene;
-		ArrayList<int[]> geneArray2 = mate.gene;
+		ArrayList<Integer> geneArray1 = gene;
+		ArrayList<Integer> geneArray2 = mate.gene;
 
 		/* Variable to modify split point */
 		int splitPoint = rand.nextInt(geneArray1.size());
 
-		ArrayList<int[]> child1 = new ArrayList<int[]>(geneArray1.subList(0, splitPoint));
-		// System.arraycopy(geneArray1, 0, child1, 0, splitPoint);
+		ArrayList<Integer> child1 = new ArrayList<Integer>(geneArray1.subList(0, splitPoint));
 		// get other half of 2nd array but do not use duplicates
 
 		for (int i = splitPoint; i < geneArray1.size(); i++) {
@@ -99,7 +102,7 @@ public class Chromosome implements Comparable<Chromosome> {
 			}
 		}
 
-		ArrayList<int[]> child2 = new ArrayList<int[]>(geneArray2.subList(0, splitPoint));
+		ArrayList<Integer> child2 = new ArrayList<Integer>(geneArray2.subList(0, splitPoint));
 		for (int i = splitPoint; i < geneArray1.size(); i++) {
 			if (!(geneArray1.get(i).equals(geneArray2.get(i)))) {
 				child2.add(geneArray1.get(i));
@@ -107,7 +110,6 @@ public class Chromosome implements Comparable<Chromosome> {
 				child2.add(geneArray2.get(i));
 			}
 		}
-		// System.out.println(child1);
 
 		return new Chromosome[] { new Chromosome(child1), new Chromosome(child2) };
 	}
@@ -122,8 +124,8 @@ public class Chromosome implements Comparable<Chromosome> {
 		} else {
 			two = one + 1;
 		}
-		int[] mu1 = gene.get(one);
-		int[] mu2 = gene.get(two);
+		int mu1 = gene.get(one);
+		int mu2 = gene.get(two);
 		gene.set(one, mu2);
 		gene.set(two, mu1);
 
