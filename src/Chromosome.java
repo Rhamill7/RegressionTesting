@@ -12,7 +12,7 @@ public class Chromosome implements Comparable<Chromosome> {
 	public static Random rand = new Random();
 	private static ArrayList<int[]> gene;
 	private static ArrayList<int[]> pool;
-	private float fitness;
+	private double fitness;
 	private static int totalTests;
 	private static int faultNumber;
 
@@ -25,7 +25,7 @@ public class Chromosome implements Comparable<Chromosome> {
 		return gene;
 	}
 
-	public float getFitness() {
+	public double getFitness() {
 		return fitness;
 	}
 	
@@ -48,10 +48,8 @@ public class Chromosome implements Comparable<Chromosome> {
 		return new Chromosome(gene);
 	}
 
-	
-
 	/* calculate fitness using fitness function */
-	public float calculateFitness(List<int[]> gene) {
+	public double calculateFitness(List<int[]> gene) {
 		int suiteTotal = 0;
 		boolean fails = false;
 		for (int i = 0; i < faultNumber; i++) {
@@ -64,13 +62,18 @@ public class Chromosome implements Comparable<Chromosome> {
 
 			}
 			if (!fails) {
-				suiteTotal += (totalTests + 1);
+				suiteTotal += (gene.size() + 1);
 			}
 			fails = false;
 		}
-
-		fitness = 1
-				- (((float) suiteTotal / ((float) faultNumber * (float) totalTests)) + (float) (1 / (2 * totalTests)));
+		//System.out.println(suiteTotal);
+		double test = (double)1/(double)(2*gene.size());
+		double test2 =(double) suiteTotal /((double) ( faultNumber * gene.size()));
+		double test3 =  1- (test + test2);
+//		System.out.println(test);
+//		System.out.println(test2);
+//		System.out.println(test3);
+		fitness = (double) 1 - ((double) suiteTotal /((double) ( faultNumber * gene.size())) + ((double) 1 / (double)(2 * gene.size())));
 		// System.out.println(fitness);
 		return fitness;
 	}
@@ -130,9 +133,9 @@ public class Chromosome implements Comparable<Chromosome> {
 	// Compare Method for comparing fitness
 	@Override
 	public int compareTo(Chromosome gene) {
-		if (fitness < gene.fitness) {
+		if (fitness > gene.fitness) {
 			return -1;
-		} else if (fitness > gene.fitness) {
+		} else if (fitness < gene.fitness) {
 			return 1;
 		}
 		return 0;
