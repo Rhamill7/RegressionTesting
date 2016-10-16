@@ -13,19 +13,19 @@ public class Chromosome implements Comparable<Chromosome> {
 
 	/* What we are aiming for */
 	public static Random rand = new Random();
-	private ArrayList<Integer> gene;
+	private List<Integer> gene;
 	private static ArrayList<Integer> pool;
 	private double fitness;
 	private static int totalTests;
 	private static int faultNumber;
 	static HashMap<Integer, int[]> key;
 
-	public Chromosome(ArrayList<Integer> gene) {
+	public Chromosome(List<Integer> gene) {
 		this.gene = gene;
 		this.fitness = calculateFitness(gene);
 	}
 
-	public ArrayList<Integer> getGene() {
+	public List<Integer> getGene() {
 		return gene;
 	}
 
@@ -85,8 +85,8 @@ public class Chromosome implements Comparable<Chromosome> {
 	/* Crossover Performed here */
 	public Chromosome[] crossover(Chromosome mate) {
 
-		ArrayList<Integer> geneArray1 = gene;
-		ArrayList<Integer> geneArray2 = mate.gene;
+		List<Integer> geneArray1 = gene;
+		List<Integer> geneArray2 = mate.gene;
 
 		/* Variable to modify split point */
 		int splitPoint = rand.nextInt(geneArray1.size());

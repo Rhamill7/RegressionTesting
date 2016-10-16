@@ -64,7 +64,7 @@ public class Population {
 		String title = "";
 		int val;
 		try {
-			BufferedReader in = new BufferedReader(new FileReader("fault-matrix-1000.dat"));
+			BufferedReader in = new BufferedReader(new FileReader("nanoxmltestfaultmatrix.txt"));
 			for (int j = 0; j < totalTests; j++) {
 				ArrayList<Integer> values = new ArrayList<Integer>();
 				while (!(title = in.readLine()).contains("unitest")) {

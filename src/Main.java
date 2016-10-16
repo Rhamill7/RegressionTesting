@@ -7,11 +7,11 @@ public class Main {
 		/* Modify Variables to adjust results */
 		int populationSize = 1000; // 100
 		int numberOfGenerations = 1;
-		float crossoverRatio = 0.7f;// 0.2 // 0.1f = 10%
-		float mutationRatio = 0.5f; // 0.9// probability of mutation for any
-		int faultNumber = 38; // 38; //9;
-		int geneLength = 20;
-		int totalTests = 1000; // 1000;//216;
+		float crossoverRatio = 0.9f;// 0.2 // 0.1f = 10%
+		float mutationRatio = 0.15f; // 0.9// probability of mutation for any
+		int faultNumber = 9; // 38; //9;
+		int geneLength = 5;
+		int totalTests = 216; // 1000;//216;
 
 		// for (int i = 0; i < 10; i++) {
 		long start = System.currentTimeMillis();
@@ -19,21 +19,34 @@ public class Main {
 		p.createPopulation(populationSize, crossoverRatio, mutationRatio, faultNumber, geneLength, totalTests);
 		Chromosome bestGene = p.getPopulation()[0];
 		// Chromosome worstGene = p.getPopulation()[215];
-		while (bestGene.getFitness() != 1 && numberOfGenerations < 50) {
-			p.evolve();
+		HillClimber hc = new HillClimber(p);
+		for (int i = 0; i < 1000; i++) {
+			hc.compareFitness(hc.getStartingPoint(), totalTests);
+			System.out.println("Best solution with Hill Climber: " + hc.bestSolution().getFitness());
+		}
+		
+		while (bestGene.getFitness() != 1 && numberOfGenerations < 100) {
+			// p.evolve();
 			// p.random();
-			bestGene = p.getPopulation()[0];
+
+//			HillClimber hc = new HillClimber(p);
+//			for (int i = 0; i < 1000; i++) {
+//				hc.compareFitness(hc.getStartingPoint(), totalTests);
+//				System.out.println("Best solution with Hill Climber: " + hc.bestSolution().getFitness());
+//			}
+
+		//	bestGene = p.getPopulation()[0];
 			// worstGene = p.getPopulation()[215];
 
-			//System.out.println(bestGene.getGene().toString());
-			System.out.println("best " + bestGene.getFitness());
+			// System.out.println(bestGene.getGene().toString());
+		//	System.out.println("best " + bestGene.getFitness());
 			// System.out.println("Worst " + worstGene.getFitness());
 			numberOfGenerations++;
 		}
 		long finish = System.currentTimeMillis();
 
-		System.out.println("Gen Number: " + numberOfGenerations + " BestGene: " + bestGene.getGene()
-				+ " Current Fitness " + bestGene.getFitness() + " Time elapsed in ms:" + (finish - start));
+	//	System.out.println("Gen Number: " + numberOfGenerations + " BestGene: " + bestGene.getGene()
+	//			+ " Current Fitness " + bestGene.getFitness() + " Time elapsed in ms:" + (finish - start));
 
 		// numberOfGenerations = 1;
 		// }
