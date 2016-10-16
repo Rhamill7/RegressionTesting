@@ -37,7 +37,7 @@ public class Chromosome implements Comparable<Chromosome> {
 
 	public static Chromosome generateRandom(int geneLength ) {
 		ArrayList<int[]> gene = new ArrayList<int[]>();
-		System.out.println("New entry");
+		//System.out.println("New entry");
 		for (int j = 0; j < geneLength; j++) {
 			int[] test = pool.get(rand.nextInt(pool.size()-1));
 		//	System.out.println(Arrays.toString(test));
