@@ -64,7 +64,7 @@ public class Population {
 		String title = "";
 		int val;
 		try {
-			BufferedReader in = new BufferedReader(new FileReader("nanoxmltestfaultmatrix.txt"));
+			BufferedReader in = new BufferedReader(new FileReader("fault-matrix-1000.dat"));
 			for (int j = 0; j < totalTests; j++) {
 				ArrayList<Integer> values = new ArrayList<Integer>();
 				while (!(title = in.readLine()).contains("unitest")) {
@@ -142,27 +142,17 @@ public class Population {
 
 	/* Selection done here TOURNAMENT STYLE! FIGHTTT!! */
 	private Chromosome[] selectParents() {
-		// System.out.println("Made it to here");
-		
-		
 		Chromosome[] parents = new Chromosome[2];
 		// Randomly select two parents via tournament selection.
 		for (int i = 0; i < 2; i++) {
-			//System.out.println(p.length);
-//			System.out.println(rand.nextInt(p.length));
 			parents[i] = p[rand.nextInt(p.length)]; // get random parent
-//			System.out.println("parent before  " + (parents[i].getGene() + " " + parents[i].getFitness()));
 			for (int j = 0; j < tournamentSize; j++) { // compare with others
 				int index = rand.nextInt(p.length);
-//				System.out.println("Second index" + index);
-//				System.out.println((p[index].getGene()));
 				if ((p[index].compareTo(parents[i]) < 0)) {
 					parents[i] = p[index];
 				}
 			}
-//			System.out.println("parent after  " + (parents[i].getGene() + " " + parents[i].getFitness()));
 		}
-		//System.exit(0);
 		return parents;
 	}
 

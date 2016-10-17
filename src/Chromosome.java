@@ -69,34 +69,22 @@ public class Chromosome implements Comparable<Chromosome> {
 			}
 			fails = false;
 		}
-		// double test = (double)1/(double)(2*gene.size());
-		// double test2 =(double) suiteTotal /((double) ( faultNumber *
-		// gene.size()));
-		// double test3 = 1- (test + test2);
-		// System.out.println(test);
-		// System.out.println(test2);
-		// System.out.println(test3);
 		fitness = (double) 1 - ((double) suiteTotal / ((double) (faultNumber * gene.size()))
 				+ ((double) 1 / (double) (2 * gene.size())));
-		// System.out.println(fitness);
 		return fitness;
 	}
 
 	/* Crossover Performed here */
 	public Chromosome[] crossover(Chromosome mate) {
-
 		List<Integer> geneArray1 = gene;
 		List<Integer> geneArray2 = mate.gene;
 
 		/* Variable to modify split point */
 		int splitPoint = rand.nextInt(geneArray1.size());
-		// System.out.println(splitPoint);
 		ArrayList<Integer> child1 = new ArrayList<Integer>(geneArray1.subList(0, splitPoint));
 		// get other half of 2nd array but do not use duplicates
 
 		for (int i = splitPoint; i < geneArray1.size(); i++) {
-			// if (!(geneArray1.get(i).equals(geneArray2.get(i)))) { //if i1 is
-			// not i2
 			if (child1.contains(geneArray2.get(i))) {
 				child1.add(geneArray1.get(i));
 			} else {
@@ -111,7 +99,6 @@ public class Chromosome implements Comparable<Chromosome> {
 			} else {
 				child2.add(geneArray1.get(i));
 			}
-
 		}
 
 		return new Chromosome[] { new Chromosome(child1), new Chromosome(child2) };
@@ -119,9 +106,7 @@ public class Chromosome implements Comparable<Chromosome> {
 
 	/* mutation performed here */
 	public Chromosome mutate() {
-		// char[] geneChars = gene.toCharArray();
 		int one = rand.nextInt(gene.size() - 1);
-		// System.out.println(one);
 		int two = 0;
 		if (one == gene.size()) {
 			two = one - 1;
@@ -133,6 +118,15 @@ public class Chromosome implements Comparable<Chromosome> {
 		gene.set(one, mu2);
 		gene.set(two, mu1);
 
+		//random mutation
+//		int one = rand.nextInt(gene.size() - 1);
+//		int two = rand.nextInt(pool.size());
+//		int mu1 = gene.get(one);
+//		int mu2 = pool.get(two);
+//		if (!gene.contains(mu2)){
+//			gene.set(one, mu2);
+//		}
+		
 		return new Chromosome(gene);
 	}
 
@@ -148,3 +142,10 @@ public class Chromosome implements Comparable<Chromosome> {
 	}
 
 }
+// double test = (double)1/(double)(2*gene.size());
+// double test2 =(double) suiteTotal /((double) ( faultNumber *
+// gene.size()));
+// double test3 = 1- (test + test2);
+// System.out.println(test);
+// System.out.println(test2);
+// System.out.println(test3);
