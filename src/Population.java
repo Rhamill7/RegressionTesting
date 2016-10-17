@@ -35,26 +35,19 @@ public class Population {
 		this.crossover = crossoverRatio;
 		this.mutation = mutationRatio;
 		this.pArr = new ArrayList<Chromosome>();
-		this.p=new Chromosome[populationSize];
+		this.p = new Chromosome[populationSize];
 		this.faultNumber = faultNumber;
 		this.geneLength = geneLength;
 		this.totalTests = totalTests;
 
 		ArrayList<Integer> pool = fileScanner();
 		Chromosome.setData(pool, key, totalTests, faultNumber);
-	//	System.out.println("First array");
 		for (int i = 0; i < populationSize; i++) {
-			this.p[i]=Chromosome.generateRandom(geneLength);
+			this.p[i] = Chromosome.generateRandom(geneLength);
 		}
-		//p = pArr.toArray();
-	//	System.out.println("SecondArray" );
-//		for ( int k = 0; k<500; k++){
-//			System.out.println(p[k].getGene())	;
-//			}
-	//	 p.toArray();
+
 		/* Sort in order of fitness */
 		Arrays.sort(p);
-		//System.exit(0);
 	}
 
 	private ArrayList<Integer> fileScanner() {
@@ -70,16 +63,13 @@ public class Population {
 				while (!(title = in.readLine()).contains("unitest")) {
 
 				}
-				// System.out.println(title);
 				int testNo = Integer.parseInt(title.substring(title.indexOf("unitest") + 7, title.length() - 1));
-				// System.out.println(testNo);
 				for (int i = 0; i < faultNumber; i++) {
 					in.readLine();
 					val = Integer.parseInt(in.readLine().trim());
 					values.add(val);
 				}
 				int[] vals = convertIntegers(values);
-				// System.out.println(Arrays.toString(vals));
 				pool.add(testNo);
 				key.put(testNo, vals);
 
@@ -109,13 +99,7 @@ public class Population {
 			if (rand.nextFloat() <= crossover) {
 				Chromosome[] parents = selectParents();
 				Chromosome[] children = parents[0].crossover(parents[1]);
-				
-//				System.out.println((parents[0].getGene()));
-//				System.out.println((parents[1].getGene()));
-//				System.out.println((children[0].getGene()));
-//				System.out.println((children[1].getGene()));
-//				System.exit(0);
-				
+
 				pDash[index++] = children[0];
 				// If space in array add 2nd child
 				if (index < pDash.length) {
@@ -129,13 +113,10 @@ public class Population {
 
 		for (int i = 0; i < pDash.length; i++) {
 			if (rand.nextFloat() <= mutation) {
-				//System.out.println(pDash[i].getGene());
 				pDash[i] = pDash[i].mutate();
-			//	System.out.println(pDash[i].getGene());
 			}
 		}
-	//	System.exit(0);
-		
+
 		Arrays.sort(pDash); // sort based on fitness
 		p = pDash; // P<-P'
 	}

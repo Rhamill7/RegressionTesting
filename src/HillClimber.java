@@ -21,52 +21,27 @@ public class HillClimber {
 		return startingPoint;
 	}
 	
+	
 	private List<Chromosome> getNeighbours(Chromosome gene, int totTests) {
 		int numTests = gene.getGene().size();
 		List<Chromosome> nHood = new ArrayList<Chromosome>();
 		
 		for(int i = 0; i < numTests; i++) {
-			List<Integer> original = gene.getGene();
-			//int uniTest = original.get(i);
-			int randomReplacement = gene.getGene().get(r.nextInt(gene.getGene().size()));
-			boolean randomExist = false;
 			for(int j = 0; j < numTests; j++) {
-				if(original.get(j) == randomReplacement) {
-					randomExist = true;
+				List<Integer> original = gene.getGene();
+				int uniTest = original.get(i);
+				if(i!=j) {
+					int swappedUni = original.get(j);
+					original.set(i, swappedUni);
+					original.set(j, uniTest);
+					nHood.add(new Chromosome(original));
 				}
 			}
-			if(!randomExist) {
-				original.set(i, randomReplacement);
-				nHood.add(new Chromosome(original));
-			}
 		}
-		
 		
 		return nHood;
 	}
 
-
-	
-//	private List<Chromosome> getNeighbours(Chromosome gene, int testNum) {
-//		int numTests = gene.getGene().size();
-//		List<Chromosome> nHood = new ArrayList<Chromosome>();
-//		
-//		
-//		for(int i = 0; i < numTests; i++) {
-//			List<Integer> original = gene.getGene();
-//			int uniTest = original.get(i);
-//			System.out.println(uniTest);
-//			if(uniTest > 0) {
-//				original.set(i, (uniTest-1));				
-//				nHood.add(new Chromosome(original));
-//			}
-//			if(uniTest < (testNum-1)) {
-//				original.set(i, (uniTest + 1));
-//				nHood.add(new Chromosome(original));
-//			}
-//		}
-//		return nHood;
-//	}
 	
 	//compare the fitness of the starting point to the fitness of its neighbours
 	public void compareFitness(Chromosome gene, int totalTests) {

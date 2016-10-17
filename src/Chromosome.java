@@ -1,17 +1,11 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 public class Chromosome implements Comparable<Chromosome> {
 
-	/* What we are aiming for */
+	
 	public static Random rand = new Random();
 	private List<Integer> gene;
 	private static ArrayList<Integer> pool;
@@ -142,10 +136,4 @@ public class Chromosome implements Comparable<Chromosome> {
 	}
 
 }
-// double test = (double)1/(double)(2*gene.size());
-// double test2 =(double) suiteTotal /((double) ( faultNumber *
-// gene.size()));
-// double test3 = 1- (test + test2);
-// System.out.println(test);
-// System.out.println(test2);
-// System.out.println(test3);
+
