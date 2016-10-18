@@ -63,8 +63,8 @@ public class Chromosome implements Comparable<Chromosome> {
 			}
 			fails = false;
 		}
-		fitness = (double) 1 - ((double) suiteTotal / ((double) (faultNumber * gene.size()))
-				+ ((double) 1 / (double) (2 * gene.size())));
+		fitness = (double) 1 - ((double) suiteTotal / ((double) (faultNumber * gene.size())))
+				+ ((double) 1 / (double) (2 * gene.size()));
 		return fitness;
 	}
 

@@ -8,9 +8,9 @@ public class Main {
 		int numberOfGenerations = 1;
 		float crossoverRatio = 0.9f;// 0.2 // 0.1f = 10%
 		float mutationRatio = 0.15f; // 0.9// probability of mutation 
-		int faultNumber = 38; // 38; //9;
-		int geneLength = 10;
-		int totalTests = 1000; // 1000;//216;
+		int faultNumber = 9; // 38; //9;
+		int geneLength = 5;
+		int totalTests = 216; // 1000;//216;
 
 		for (int i = 0; i < 10; i++) {
 			long start = System.currentTimeMillis();
